@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -19,4 +20,23 @@ func GetTicketList(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(rw, "%+v", res)
+}
+
+func CreateTicket(w http.ResponseWriter, r *http.Request) {
+
+	//Decoding the Body
+	request := map[string]string{}
+	json.NewDecoder(r.Body).Decode(&request)
+
+	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
+	resp, err := restClient.R().
+		SetBasicAuth(service_now.USER, service_now.PASS).
+		EnableTrace().
+		SetBody(request).
+		Post(service_now.API_URL + "/now/table/incident")
+	if err != nil {
+		http.Error(w, http.StatusText(404), 404)
+	} else {
+		fmt.Fprintf(w, "Created Ticket: %+v", resp)
+	}
 }

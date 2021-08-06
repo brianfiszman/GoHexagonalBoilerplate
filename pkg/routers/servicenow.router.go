@@ -14,7 +14,7 @@ var (
 func CreateRouter() chi.Router {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
-	router.Get("/", controllers.GetTicketList)
-
+	router.Get("/tickets", controllers.GetTicketList)
+	router.Post("/tickets", controllers.CreateTicket)
 	return router
 }
