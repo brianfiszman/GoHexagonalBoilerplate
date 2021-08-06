@@ -2,19 +2,16 @@ package main
 
 import (
 	"net/http"
+	"os"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/routers"
 )
 
 func main() {
-	router := chi.NewRouter()
-	router.Use(middleware.Logger)
+	// Load Environment Variables
+	config.LoadEnvironmentVariables()
 
-	router.Get(
-		"/", func(rw http.ResponseWriter, r *http.Request) {
-			rw.Write([]byte("Welcome"))
-		})
-
-	http.ListenAndServe(":3000", router)
+	// Listen
+	http.ListenAndServe(":"+os.Getenv("HTTP_PORT"), routers.Router)
 }
