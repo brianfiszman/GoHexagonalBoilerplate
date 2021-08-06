@@ -1,0 +1,2 @@
+# ignore postgresql volume folder
+./postgresql
