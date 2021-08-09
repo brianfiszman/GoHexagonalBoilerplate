@@ -1,3 +1,4 @@
 # ignore postgresql volume folder
 ./postgresql
-.env
+
+*.env*

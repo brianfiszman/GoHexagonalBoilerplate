@@ -13,7 +13,11 @@ var restClient resty.Client = *resty.New()
 
 func GetTicketList(rw http.ResponseWriter, r *http.Request) {
 	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-	res, err := restClient.SetBasicAuth(service_now.USER, service_now.PASS).EnableTrace().GetClient().Get(service_now.API_URL + "/now/table/incident")
+	res, err := restClient.
+		R().
+		EnableTrace().
+		SetBasicAuth(service_now.USER, service_now.PASS).
+		Get(service_now.API_URL + "/now/table/incident")
 
 	if err != nil {
 		http.Error(rw, http.StatusText(401), 401)
@@ -22,29 +26,34 @@ func GetTicketList(rw http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(rw, "%+v", res)
 }
 
-func CreateTicket(w http.ResponseWriter, r *http.Request) {
-
+func CreateTicket(rw http.ResponseWriter, r *http.Request) {
 	//Decoding the Body
 	request := map[string]string{}
 	json.NewDecoder(r.Body).Decode(&request)
 
 	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-	resp, err := restClient.R().
-		SetBasicAuth(service_now.USER, service_now.PASS).
+	resp, err := restClient.
+		R().
 		EnableTrace().
+		SetBasicAuth(service_now.USER, service_now.PASS).
 		SetBody(request).
 		Post(service_now.API_URL + "/now/table/incident")
+
 	if err != nil {
-		http.Error(w, http.StatusText(404), 404)
-	} else {
-		fmt.Fprintf(w, "Created Ticket: %+v", resp)
+		http.Error(rw, http.StatusText(404), 404)
 	}
+
+	fmt.Fprintf(rw, "Created Ticket: %+v", resp)
+
 }
 
 func GetUsersList(rw http.ResponseWriter, r *http.Request) {
 	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-	res, err := restClient.SetBasicAuth(service_now.USER, service_now.PASS).
-							EnableTrace().GetClient().Get(service_now.API_URL + "/now/table/sys_user")
+	res, err := restClient.
+		R().
+		EnableTrace().
+		SetBasicAuth(service_now.USER, service_now.PASS).
+		Get(service_now.API_URL + "/now/table/sys_user")
 
 	if err != nil {
 		http.Error(rw, http.StatusText(401), 401)
