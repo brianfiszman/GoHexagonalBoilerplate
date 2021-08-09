@@ -40,3 +40,15 @@ func CreateTicket(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Created Ticket: %+v", resp)
 	}
 }
+
+func GetUsersList(rw http.ResponseWriter, r *http.Request) {
+	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
+	res, err := restClient.SetBasicAuth(service_now.USER, service_now.PASS).
+							EnableTrace().GetClient().Get(service_now.API_URL + "/now/table/sys_user")
+
+	if err != nil {
+		http.Error(rw, http.StatusText(401), 401)
+	}
+
+	fmt.Fprintf(rw, "%+v", res)
+}
