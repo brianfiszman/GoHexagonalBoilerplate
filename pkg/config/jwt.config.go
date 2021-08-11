@@ -9,7 +9,6 @@ type JwtConfig struct {
 }
 
 func LoadJwtConfig() JwtConfig{
-
 	return JwtConfig{
 		SECRET: os.Getenv("JWT_SECRET"),
 	}

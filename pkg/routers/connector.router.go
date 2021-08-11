@@ -4,7 +4,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func TicketingRouter() chi.Router {
+func ConnectorRouter() chi.Router {
 	router := chi.NewRouter()
 	router.Mount("/auth", CreateAuthRouter())
 	router.Mount("/tickets", CreateServiceNowRouter())

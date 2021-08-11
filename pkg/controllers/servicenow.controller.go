@@ -48,7 +48,6 @@ func CreateTicket(rw http.ResponseWriter, r *http.Request) {
 }
 
 func GetUsersList(rw http.ResponseWriter, r *http.Request) {
-	
 	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
 	res, err := restClient.
 		R().

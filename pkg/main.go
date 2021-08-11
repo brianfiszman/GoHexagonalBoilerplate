@@ -9,5 +9,5 @@ import (
 
 func main() {
 	// Listen
-	http.ListenAndServe(":"+os.Getenv("HTTP_PORT"), routers.TicketingRouter())
+	http.ListenAndServe(":"+os.Getenv("HTTP_PORT"), routers.ConnectorRouter())
 }
