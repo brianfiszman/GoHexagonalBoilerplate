@@ -1,22 +1,23 @@
 package routers
 
 import (
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/controllers"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/services"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/jwtauth/v5"
+	"github.com/go-chi/chi/middleware"
+
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/controllers"
 )
 
-func CreateServiceNowRouter() chi.Router {
-	router := chi.NewRouter()
-	
-	router.Group(func(router chi.Router){
-		router.Use(jwtauth.Verifier(services.TokenAuth))
-		router.Use(jwtauth.Authenticator)
-		router.Get("/users", controllers.GetUsersList)
-		router.Get("/", controllers.GetTicketList)
-		router.Post("/", controllers.CreateTicket)
-	})
+var (
+	Router chi.Router = CreateRouter()
+)
 
+func CreateRouter() chi.Router {
+	router := chi.NewRouter()
+	router.Use(middleware.Logger)
+	router.Get("/tickets/users", controllers.GetUsersList)
+	router.Get("/tickets", controllers.GetTicketList)
+	router.Post("/tickets", controllers.CreateTicket)
+
+	
 	return router
 }
