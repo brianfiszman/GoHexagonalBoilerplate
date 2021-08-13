@@ -16,8 +16,9 @@ type TicketController struct {
 
 var restClient resty.Client = *resty.New()
 
-func GetTicketList(rw http.ResponseWriter, r *http.Request) {
+func (c TicketController) GetTicketList(rw http.ResponseWriter, r *http.Request) {
 	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
+
 	res, err := restClient.
 		R().
 		EnableTrace().
@@ -25,7 +26,7 @@ func GetTicketList(rw http.ResponseWriter, r *http.Request) {
 		Get(service_now.API_URL + "/now/table/incident")
 
 	if err != nil {
-		http.Error(rw, http.StatusText(401), 401)
+		http.Error(rw, http.StatusText(404), 404)
 	}
 
 	fmt.Fprintf(rw, "%+v", res)
@@ -37,22 +38,21 @@ func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) 
 	json.NewDecoder(r.Body).Decode(&request)
 
 	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-	// resp, err := restClient.
-		// R().
-		// EnableTrace().
-		// SetBasicAuth(service_now.USER, service_now.PASS).
-		// SetBody(request).
-		// Post(service_now.API_URL + "/now/table/incident")
-		
-		res, err := restClient.
-			R().
-			EnableTrace().
-			SetBasicAuth(service_now.USER, service_now.PASS).
-			Get(service_now.API_URL + "/now/table/incident")
+
+	res, err := restClient.
+		R().
+		EnableTrace().
+		SetBasicAuth(service_now.USER, service_now.PASS).
+		SetBody(request).
+		Post(service_now.API_URL + "/now/table/incident")
 
 	if err != nil {
 		http.Error(rw, http.StatusText(404), 404)
 	}
+
+	// Ticket was sucessfuly created.
+	// INSERT TICKET INTO DISCOVER DATABASE
+	// c.Service.Create(res)
 
 	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 

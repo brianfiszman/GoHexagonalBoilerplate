@@ -25,9 +25,6 @@ func main() {
 		HTTP_Port:   os.Getenv("HTTP_PORT"),
 	}
 
-	// Connect to Database
-	database.ConnectDatabase()
-
 	// Server initializes listening
 	srv.Run()
 }

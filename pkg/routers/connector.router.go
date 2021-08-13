@@ -5,7 +5,7 @@ import (
 )
 
 type HTTP_Router struct {
-	ConnectorRouter *chi.Mux
+	ConnectorRouter  *chi.Mux
 	ServiceNowRouter ServiceNowRouter
 }
 

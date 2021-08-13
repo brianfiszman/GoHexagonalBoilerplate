@@ -24,7 +24,5 @@ func (d *Database) ConnectDatabase() {
 		os.Exit(1)
 	}
 
-	defer d.ConnectionPool.Close()
-
 	fmt.Println("Connected to Database")
 }

@@ -8,8 +8,8 @@ import (
 )
 
 type ServiceNowRouter struct {
-	router	*chi.Mux
-	controller	controllers.TicketController
+	router     *chi.Mux
+	Controller controllers.TicketController
 }
 
 func (r ServiceNowRouter) NewServiceNowRouter() *chi.Mux {
@@ -19,8 +19,8 @@ func (r ServiceNowRouter) NewServiceNowRouter() *chi.Mux {
 		router.Use(jwtauth.Verifier(services.TokenAuth))
 		router.Use(jwtauth.Authenticator)
 		router.Get("/users", controllers.GetUsersList)
-		router.Get("/", controllers.GetTicketList)
-		router.Post("/", r.controller.CreateTicket)
+		router.Get("/", r.Controller.GetTicketList)
+		router.Post("/", r.Controller.CreateTicket)
 	})
 
 	return r.router

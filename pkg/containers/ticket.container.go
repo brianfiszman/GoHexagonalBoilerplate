@@ -1,4 +1,4 @@
-package models
+package containers
 
 import (
 	"github.com/brianfiszman/GoFromZeroToHero/pkg/controllers"
@@ -9,27 +9,29 @@ import (
 )
 
 // Container
-type TicketModel struct {
-	Repository	repositories.TicketRepository
-	Service		  services.TicketService
-	Controller  controllers.TicketController
-	router			routers.ServiceNowRouter
+type TicketContainer struct {
+	Repository repositories.TicketRepository
+	Service    services.TicketService
+	Controller controllers.TicketController
+	Router     routers.ServiceNowRouter
 }
 
-func CreateTicketContainer(d *infrastructure.Database){
-	
+func CreateTicketContainer(d *infrastructure.Database) TicketContainer {
 	var ticketRepository = repositories.TicketRepository{Database: d}
 
 	var ticketService = services.TicketService{Repository: ticketRepository}
 
-	var t TicketModel = TicketModel{
+	var t TicketContainer = TicketContainer{
 		Repository: ticketRepository,
-		Service: ticketService,
+		Service:    ticketService,
 		Controller: controllers.TicketController{
 			Service: ticketService,
 		},
 	}
 
-	t.router = routers.ServiceNowRouter{}
+	t.Router = routers.ServiceNowRouter{
+		Controller: t.Controller,
+	}
 
+	return t
 }
