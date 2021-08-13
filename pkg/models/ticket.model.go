@@ -1,27 +1,35 @@
 package models
 
 import (
-	"context"
-	"fmt"
-
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/controllers"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/repositories"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/services"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/routers"
+	infrastructure "github.com/brianfiszman/GoFromZeroToHero/pkg/services"
 )
 
-type Ticket struct {
-	Id string `json:"id"`
-	TicketId string `json:"ticketId"`
-	Caller string `json:"caller"`
-	Description string `json:"description"`
-	ShortDescription string `json:"shortDescription"`
+// Container
+type TicketModel struct {
+	Repository	repositories.TicketRepository
+	Service		  services.TicketService
+	Controller  controllers.TicketController
+	router			routers.ServiceNowRouter
 }
 
-func (t *Ticket) Insert (conn *pgxpool.Conn) {
-		// Executing SQL query for insertion 
-		if _, err := conn.Exec(context.Background(), "INSERT INTO TEST_TABLE(NAME) VALUES($1)", t.Caller); err != nil {
-			// Handling error, if occur
-			fmt.Println("Unable to insert due to: ", err)
-			return
+func CreateTicketContainer(d *infrastructure.Database){
+	
+	var ticketRepository = repositories.TicketRepository{Database: d}
+
+	var ticketService = services.TicketService{Repository: ticketRepository}
+
+	var t TicketModel = TicketModel{
+		Repository: ticketRepository,
+		Service: ticketService,
+		Controller: controllers.TicketController{
+			Service: ticketService,
+		},
 	}
 
-	fmt.Println("Insertion Succesfull")
+	t.router = routers.ServiceNowRouter{}
+
 }
