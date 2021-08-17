@@ -49,9 +49,8 @@ func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) 
 	if err != nil {
 		http.Error(rw, http.StatusText(404), 404)
 	}
-
-	c.Service.Create(body)
-
+	
+	c.Service.Create(res)
 	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 
 }
