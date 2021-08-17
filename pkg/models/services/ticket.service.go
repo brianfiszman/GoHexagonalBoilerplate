@@ -10,6 +10,8 @@ type TicketService struct {
 }
 
 // Creates a ticket in DB
-func (s TicketService) Create(ticket schemas.Ticket) {
+func (s TicketService) Create(body map[string]string) {
+	var ticket schemas.Ticket = schemas.Ticket{Caller: body["caller"]}
+
 	s.Repository.Insert(ticket)
 }

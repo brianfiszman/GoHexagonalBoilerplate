@@ -18,9 +18,7 @@ type TicketContainer struct {
 
 func CreateTicketContainer(d *infrastructure.Database) TicketContainer {
 	var ticketRepository = repositories.TicketRepository{Database: d}
-
 	var ticketService = services.TicketService{Repository: ticketRepository}
-
 	var t TicketContainer = TicketContainer{
 		Repository: ticketRepository,
 		Service:    ticketService,
