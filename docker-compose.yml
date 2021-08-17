@@ -3,10 +3,12 @@ services:
   postgresql:
     image: "postgres" # use latest official postgres version
     ports:
-        - "5432:5432"
+        - "5433:5433"
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=123123
       - POSTGRES_DB=testdb
     volumes:
-      - ./postgresql/data/:/var/lib/postgresql/data/
+      - ".dev-data/fred/postgresql:/var/lib/postgresql/data"
+      - ".dev-data/fred/db-server-run/:/run/postgresql/"
+      - ./db-schema:/db-schema

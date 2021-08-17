@@ -4,9 +4,16 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func ConnectorRouter() chi.Router {
-	router := chi.NewRouter()
-	router.Mount("/auth", CreateAuthRouter())
-	router.Mount("/tickets", CreateServiceNowRouter())
-	return router
+type HTTP_Router struct {
+	ConnectorRouter  *chi.Mux
+	ServiceNowRouter ServiceNowRouter
+}
+
+func (r *HTTP_Router) NewConnectorRouter() *chi.Mux {
+	r.ConnectorRouter = chi.NewRouter()
+
+	r.ConnectorRouter.Mount("/auth", NewAuthRouter())
+	r.ConnectorRouter.Mount("/tickets", r.ServiceNowRouter.Router)
+
+	return r.ConnectorRouter
 }

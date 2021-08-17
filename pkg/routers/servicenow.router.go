@@ -7,16 +7,21 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 )
 
-func CreateServiceNowRouter() chi.Router {
-	router := chi.NewRouter()
-	
-	router.Group(func(router chi.Router){
+type ServiceNowRouter struct {
+	Router     *chi.Mux
+	Controller controllers.TicketController
+}
+
+func (r ServiceNowRouter) NewServiceNowRouter() *chi.Mux {
+	r.Router = chi.NewRouter()
+
+	r.Router.Group(func(router chi.Router) {
 		router.Use(jwtauth.Verifier(services.TokenAuth))
 		router.Use(jwtauth.Authenticator)
 		router.Get("/users", controllers.GetUsersList)
-		router.Get("/", controllers.GetTicketList)
-		router.Post("/", controllers.CreateTicket)
+		router.Get("/", r.Controller.GetTicketList)
+		router.Post("/", r.Controller.CreateTicket)
 	})
 
-	return router
+	return r.Router
 }

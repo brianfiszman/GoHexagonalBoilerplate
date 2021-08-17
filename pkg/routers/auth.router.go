@@ -5,10 +5,10 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func CreateAuthRouter() chi.Router{
+func NewAuthRouter() chi.Router {
 	router := chi.NewRouter()
 
 	router.Post("/", controllers.Auth)
-	
+
 	return router
 }

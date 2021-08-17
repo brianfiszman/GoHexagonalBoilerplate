@@ -1,13 +1,10 @@
 package main
 
-import (
-	"net/http"
-	"os"
-
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/routers"
-)
+import "github.com/brianfiszman/GoFromZeroToHero/pkg/containers"
 
 func main() {
-	// Listen
-	http.ListenAndServe(":"+os.Getenv("HTTP_PORT"), routers.ConnectorRouter())
+	var app containers.AppContainer = containers.CreateAppContainer()
+
+	// Server initializes listening
+	app.ServerContainer.Server.Run()
 }
