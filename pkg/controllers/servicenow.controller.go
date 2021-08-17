@@ -34,8 +34,8 @@ func (c TicketController) GetTicketList(rw http.ResponseWriter, r *http.Request)
 
 func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) {
 	//Decoding the Body
-	request := map[string]string{}
-	json.NewDecoder(r.Body).Decode(&request)
+	body := map[string]string{}
+	json.NewDecoder(r.Body).Decode(&body)
 
 	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
 
@@ -43,16 +43,14 @@ func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) 
 		R().
 		EnableTrace().
 		SetBasicAuth(service_now.USER, service_now.PASS).
-		SetBody(request).
+		SetBody(body).
 		Post(service_now.API_URL + "/now/table/incident")
 
 	if err != nil {
 		http.Error(rw, http.StatusText(404), 404)
 	}
 
-	// Ticket was sucessfuly created.
-	// INSERT TICKET INTO DISCOVER DATABASE
-	// c.Service.Create(res)
+	c.Service.Create(body)
 
 	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 
