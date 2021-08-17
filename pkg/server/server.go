@@ -12,9 +12,6 @@ type Server struct {
 }
 
 func (s *Server) Run() {
-	// Create ConnectorRouter inside Server
-	s.HTTP_Router.NewConnectorRouter()
-
 	// Listen on the created router
 	http.ListenAndServe(":"+s.HTTP_Port, s.HTTP_Router.ConnectorRouter)
 }

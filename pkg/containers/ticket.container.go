@@ -27,9 +27,8 @@ func CreateTicketContainer(d *infrastructure.Database) TicketContainer {
 		},
 	}
 
-	t.Router = routers.ServiceNowRouter{
-		Controller: t.Controller,
-	}
+	t.Router.Controller = t.Controller
+	t.Router.Router = t.Router.NewServiceNowRouter()
 
 	return t
 }

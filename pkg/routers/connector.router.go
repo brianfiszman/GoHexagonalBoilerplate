@@ -9,7 +9,11 @@ type HTTP_Router struct {
 	ServiceNowRouter ServiceNowRouter
 }
 
-func (r *HTTP_Router) NewConnectorRouter() {
+func (r *HTTP_Router) NewConnectorRouter() *chi.Mux {
+	r.ConnectorRouter = chi.NewRouter()
+
 	r.ConnectorRouter.Mount("/auth", NewAuthRouter())
-	r.ConnectorRouter.Mount("/tickets", r.ServiceNowRouter.NewServiceNowRouter())
+	r.ConnectorRouter.Mount("/tickets", r.ServiceNowRouter.Router)
+
+	return r.ConnectorRouter
 }

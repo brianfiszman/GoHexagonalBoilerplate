@@ -6,5 +6,5 @@ func main() {
 	var app containers.AppContainer = containers.CreateAppContainer()
 
 	// Server initializes listening
-	app.Server.Run()
+	app.ServerContainer.Server.Run()
 }
