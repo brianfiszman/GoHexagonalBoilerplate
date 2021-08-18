@@ -4,6 +4,14 @@
 This project provides an API that communicates with ServiceNow 
 API for the creation and listing of tickets and also listing of users.
 
+# Available routes:
+
+|method|endpoint|description|params|
+|:-----|:-----|:-----|:-----|
+|GET|/tickets/users|finds all users| |
+|GET|/tickets|finds all tickets| |
+|POST|/tickets|creates new ticket| |
+
 ### Getting started
 1. You need to have ***go***, ***Docker*** and ***docker-compose*** installed
 2. Clone the repository by running `git clone https://github.com/brianfiszman/GoFromZeroToHero` into your terminal
