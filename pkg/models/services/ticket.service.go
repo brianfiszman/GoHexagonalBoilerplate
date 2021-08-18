@@ -19,6 +19,25 @@ type TicketService struct {
 var restClient resty.Client = *resty.New()
 
 /*
+* Send a REST Request to ServiceNow API and
+* fetches the user ticket lists on success
+ */
+func (s TicketService) GetTickets() (*resty.Response, error) {
+	res, err := restClient.
+		R().
+		EnableTrace().
+		SetBasicAuth(s.USER, s.PASS).
+		Get(s.API_URL + "/now/table/incident")
+
+	if err != nil {
+		fmt.Println(err)
+		return res, err
+	}
+
+	return res, err
+}
+
+/*
 * Send a REST Request to ServiceNow API and generates
 * a Ticket in PostgreSQL Database on Success
  */

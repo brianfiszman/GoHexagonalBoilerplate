@@ -19,13 +19,8 @@ type TicketController struct {
 var restClient resty.Client = *resty.New()
 
 func (c TicketController) GetTicketList(rw http.ResponseWriter, r *http.Request) {
-	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-
-	res, err := restClient.
-		R().
-		EnableTrace().
-		SetBasicAuth(service_now.USER, service_now.PASS).
-		Get(service_now.API_URL + "/now/table/incident")
+	// Call the TicketService to GetTickets
+	res, err := c.Service.GetTickets()
 
 	if err != nil {
 		http.Error(rw, http.StatusText(404), 404)
@@ -37,9 +32,10 @@ func (c TicketController) GetTicketList(rw http.ResponseWriter, r *http.Request)
 func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) {
 	createTicketDTO := dtos.CreateTicketDTO{}
 
-	//Decoding the Body
+	//Decoding the Body into a CreateTicketDTO
 	json.NewDecoder(r.Body).Decode(&createTicketDTO)
 
+	// Call the TicketService to Create
 	res, err := c.Service.Create(createTicketDTO)
 
 	if err != nil {
