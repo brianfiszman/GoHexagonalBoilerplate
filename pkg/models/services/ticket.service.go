@@ -38,6 +38,25 @@ func (s TicketService) GetTickets() (*resty.Response, error) {
 }
 
 /*
+* Send a REST Request to ServiceNow API and
+* fetches the users list on success
+ */
+func (s TicketService) GetUsers() (*resty.Response, error) {
+	res, err := restClient.
+		R().
+		EnableTrace().
+		SetBasicAuth(s.USER, s.PASS).
+		Get(s.API_URL + "/now/table/sys_user")
+
+	if err != nil {
+		fmt.Println(err)
+		return res, err
+	}
+
+	return res, err
+}
+
+/*
 * Send a REST Request to ServiceNow API and generates
 * a Ticket in PostgreSQL Database on Success
  */

@@ -7,7 +7,6 @@ import (
 
 	"github.com/go-resty/resty/v2"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
 	"github.com/brianfiszman/GoFromZeroToHero/pkg/dtos"
 	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/services"
 )
@@ -45,13 +44,9 @@ func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) 
 	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 }
 
-func GetUsersList(rw http.ResponseWriter, r *http.Request) {
-	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-	res, err := restClient.
-		R().
-		EnableTrace().
-		SetBasicAuth(service_now.USER, service_now.PASS).
-		Get(service_now.API_URL + "/now/table/sys_user")
+func (c TicketController) GetUsersList(rw http.ResponseWriter, r *http.Request) {
+	// Call the TicketService to GetTickets
+	res, err := c.Service.GetUsers()
 
 	if err != nil {
 		http.Error(rw, http.StatusText(401), 401)
