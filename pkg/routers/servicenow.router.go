@@ -18,7 +18,7 @@ func (r ServiceNowRouter) NewServiceNowRouter() *chi.Mux {
 	r.Router.Group(func(router chi.Router) {
 		router.Use(jwtauth.Verifier(services.TokenAuth))
 		router.Use(jwtauth.Authenticator)
-		router.Get("/users", controllers.GetUsersList)
+		router.Get("/users", r.Controller.GetUsersList)
 		router.Get("/", r.Controller.GetTicketList)
 		router.Post("/", r.Controller.CreateTicket)
 	})

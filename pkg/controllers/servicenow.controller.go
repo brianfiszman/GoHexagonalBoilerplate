@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/services"
 	"github.com/go-resty/resty/v2"
+
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/dtos"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/services"
 )
 
 type TicketController struct {
@@ -17,13 +18,8 @@ type TicketController struct {
 var restClient resty.Client = *resty.New()
 
 func (c TicketController) GetTicketList(rw http.ResponseWriter, r *http.Request) {
-	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-
-	res, err := restClient.
-		R().
-		EnableTrace().
-		SetBasicAuth(service_now.USER, service_now.PASS).
-		Get(service_now.API_URL + "/now/table/incident")
+	// Call the TicketService to GetTickets
+	res, err := c.Service.GetTickets()
 
 	if err != nil {
 		http.Error(rw, http.StatusText(404), 404)
@@ -33,35 +29,24 @@ func (c TicketController) GetTicketList(rw http.ResponseWriter, r *http.Request)
 }
 
 func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) {
-	//Decoding the Body
-	body := map[string]string{}
-	json.NewDecoder(r.Body).Decode(&body)
+	createTicketDTO := dtos.CreateTicketDTO{}
 
-	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
+	//Decoding the Body into a CreateTicketDTO
+	json.NewDecoder(r.Body).Decode(&createTicketDTO)
 
-	res, err := restClient.
-		R().
-		EnableTrace().
-		SetBasicAuth(service_now.USER, service_now.PASS).
-		SetBody(body).
-		Post(service_now.API_URL + "/now/table/incident")
+	// Call the TicketService to Create
+	res, err := c.Service.Create(createTicketDTO)
 
 	if err != nil {
-		http.Error(rw, http.StatusText(404), 404)
+		http.Error(rw, http.StatusText(403), 403)
 	}
-	
-	c.Service.Create(res)
-	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 
+	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 }
 
-func GetUsersList(rw http.ResponseWriter, r *http.Request) {
-	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-	res, err := restClient.
-		R().
-		EnableTrace().
-		SetBasicAuth(service_now.USER, service_now.PASS).
-		Get(service_now.API_URL + "/now/table/sys_user")
+func (c TicketController) GetUsersList(rw http.ResponseWriter, r *http.Request) {
+	// Call the TicketService to GetTickets
+	res, err := c.Service.GetUsers()
 
 	if err != nil {
 		http.Error(rw, http.StatusText(401), 401)
