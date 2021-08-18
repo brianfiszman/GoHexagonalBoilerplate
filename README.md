@@ -6,11 +6,12 @@ API for the creation and listing of tickets and also listing of users.
 
 # Available routes:
 
-|method|endpoint|description|params|
+|method|endpoint|description|headers|
 |:-----|:-----|:-----|:-----|
-|GET|/tickets/users|finds all users| |
-|GET|/tickets|finds all tickets| |
-|POST|/tickets|creates new ticket| |
+|GET|/tickets/users|finds all users|bearer JWT token |
+|GET|/tickets|finds all tickets|bearer JWT token |
+|POST|/tickets|creates new ticket|bearer JWT token |
+|POST|/auth|returns jwt token| |
 
 # Project Structure
 ```sh
