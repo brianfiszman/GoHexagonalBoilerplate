@@ -12,6 +12,21 @@ API for the creation and listing of tickets and also listing of users.
 |GET|/tickets|finds all tickets| |
 |POST|/tickets|creates new ticket| |
 
+# Project Structure
+```sh
+    pkg
+    |_ config
+    |_ containers
+    |_ controllers
+    |_ dtos
+    |_ model
+        |_ repositories
+        |_ schemas
+        |_ services
+    |_ routers
+    |_ server
+    |_ services       
+```
 ### Getting started
 1. You need to have ***go***, ***Docker*** and ***docker-compose*** installed
 2. Clone the repository by running `git clone https://github.com/brianfiszman/GoFromZeroToHero` into your terminal
