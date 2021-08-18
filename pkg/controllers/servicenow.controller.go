@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/services"
 	"github.com/go-resty/resty/v2"
+
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/dtos"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/services"
 )
 
 type TicketController struct {
@@ -33,26 +35,18 @@ func (c TicketController) GetTicketList(rw http.ResponseWriter, r *http.Request)
 }
 
 func (c TicketController) CreateTicket(rw http.ResponseWriter, r *http.Request) {
+	createTicketDTO := dtos.CreateTicketDTO{}
+
 	//Decoding the Body
-	body := map[string]string{}
-	json.NewDecoder(r.Body).Decode(&body)
+	json.NewDecoder(r.Body).Decode(&createTicketDTO)
 
-	var service_now config.ServiceNowConfig = config.LoadServiceNowConfig()
-
-	res, err := restClient.
-		R().
-		EnableTrace().
-		SetBasicAuth(service_now.USER, service_now.PASS).
-		SetBody(body).
-		Post(service_now.API_URL + "/now/table/incident")
+	res, err := c.Service.Create(createTicketDTO)
 
 	if err != nil {
-		http.Error(rw, http.StatusText(404), 404)
+		http.Error(rw, http.StatusText(403), 403)
 	}
-	
-	c.Service.Create(res)
-	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 
+	fmt.Fprintf(rw, "Created Ticket: %+v", res)
 }
 
 func GetUsersList(rw http.ResponseWriter, r *http.Request) {
