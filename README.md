@@ -48,3 +48,7 @@ API for the creation and listing of tickets and also listing of users.
 
 4. Run `docker-compose up` in your terminal
 5. Run `make run-connector` in your terminal
+
+### Mentions
+I want to thank for the support in this project to my GlobalLogic Team, @barbaraimperatori and @MaxiSanchez600
+You are really awesome! :-D
