@@ -11,17 +11,17 @@ type ServerContainer struct {
 	*server.Server
 }
 
-func CreateServerContainer(serviceNowRouter routers.ServiceNowRouter) ServerContainer {
-	var httpRouter *routers.HTTP_Router = &routers.HTTP_Router{
-		ServiceNowRouter: serviceNowRouter,
-	}
+func CreateServerContainer() (serverContainer ServerContainer) {
+	var httpRouter *routers.HTTP_Router = &routers.HTTP_Router{}
 
 	httpRouter.ConnectorRouter = httpRouter.NewConnectorRouter()
 
-	var serverContainer ServerContainer = ServerContainer{&server.Server{
-		HTTP_Router: httpRouter,
-		HTTP_Port:   os.Getenv("HTTP_PORT"),
-	}}
+	serverContainer = ServerContainer{
+		&server.Server{
+			HTTP_Router: httpRouter,
+			HTTP_Port:   os.Getenv("HTTP_PORT"),
+		},
+	}
 
-	return serverContainer
+	return
 }
