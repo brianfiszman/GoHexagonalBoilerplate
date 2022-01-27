@@ -8,7 +8,6 @@ import (
 )
 
 type HealthContainer struct {
-	Database   interfaces.Database
 	Router     routers.HealthRouter
 	Controller controllers.HealthController
 	Service    services.HealthService
