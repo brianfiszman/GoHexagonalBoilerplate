@@ -36,3 +36,7 @@ func (d *PostgreSQLAdapter) ConnectDatabase() {
 func (d *PostgreSQLAdapter) GetConnection() *pgxpool.Pool {
 	return d.ConnectionPool
 }
+
+func (d *PostgreSQLAdapter) Ping() error {
+	return d.ConnectionPool.Ping(context.Background())
+}
