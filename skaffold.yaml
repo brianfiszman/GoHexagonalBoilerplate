@@ -19,3 +19,9 @@ deploy:
         image: brianfiszman/go-from-zero-to-hero
       imageStrategy:
         helm: {}
+
+portForward:
+ - resourceType: service
+   resourceName: app
+   port: 8080
+   localPort: 8080
