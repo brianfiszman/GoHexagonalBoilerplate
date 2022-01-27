@@ -35,6 +35,31 @@ spec:
               secretKeyRef:
                 name: app
                 key: HTTP_PORT
+          - name: DATABASE_NAME
+            valueFrom:
+              secretKeyRef:
+                name: app
+                key: DATABASE_NAME
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: app
+                key: DATABASE_USER
+          - name: DATABASE_PASS
+            valueFrom:
+              secretKeyRef:
+                name: app
+                key: DATABASE_PASS
+          - name: DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: app
+                key: DATABASE_HOST
+          - name: DATABASE_PORT
+            valueFrom:
+              secretKeyRef:
+                name: app
+                key: DATABASE_PORT
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -45,11 +70,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /health
               port: {{ .Values.service.port }}
           readinessProbe:
             httpGet:
-              path: /
+              path: /health
               port: {{ .Values.service.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
