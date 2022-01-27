@@ -1,6 +1,6 @@
 .PHONY: run-connector
 run-connector: 
-	env `cat .env` go run ./pkg/main.go
+	env `cat .env` go run ./cmd/main.go
 
 .PHONY: create-topics
 create-topics:
@@ -10,6 +10,10 @@ create-topics:
 .PHONY: skaffold-dev
 skaffold-dev:
 	skaffold dev --auto-build --auto-deploy --tail --cleanup
+
+.PHONY: skaffold-debug
+skaffold-debug:
+	skaffold debug --auto-build --auto-deploy --tail --cleanup
 
 .PHONY: encrypt-secrets
 encrypt-secrets:
