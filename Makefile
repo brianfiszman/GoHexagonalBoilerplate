@@ -1,6 +1,6 @@
 .PHONY: run-connector
 run-connector: 
-	env `cat .env` go run ./pkg/main.go
+	env `cat .env` go run ./cmd/main.go
 
 .PHONY: create-topics
 create-topics:
