@@ -9,9 +9,10 @@ type ServerContainer struct {
 	Server *http.Server
 }
 
-func NewServerContainer() (serverContainer ServerContainer) {
-	var httpRouter *routers.HTTPRouter = &routers.HTTPRouter{}
+func NewServerContainer(healthRouter routers.HealthRouter) (serverContainer ServerContainer) {
+	var httpRouter *routers.HTTPRouter = &routers.HTTPRouter{HealthRouter: healthRouter}
 
+	httpRouter.HealthRouter = healthRouter
 	httpRouter.Handler = httpRouter.NewHTTPRouter()
 
 	serverContainer = ServerContainer{

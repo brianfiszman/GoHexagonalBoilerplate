@@ -1,13 +1,13 @@
 package routers
 
 import (
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/application/controllers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
 
 type HTTPRouter struct {
-	Handler *chi.Mux
+	Handler      *chi.Mux
+	HealthRouter HealthRouter
 }
 
 func (r *HTTPRouter) NewHTTPRouter() *chi.Mux {
@@ -16,7 +16,7 @@ func (r *HTTPRouter) NewHTTPRouter() *chi.Mux {
 	r.Handler.Use(middleware.Logger)
 
 	r.Handler.Mount("/auth", NewAuthRouter())
-	r.Handler.Get("/", controllers.GetHeartBeat)
+	r.Handler.Mount("/health", r.HealthRouter.Handler)
 
 	return r.Handler
 }
