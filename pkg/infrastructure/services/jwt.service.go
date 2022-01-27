@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/config"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/mitchellh/mapstructure"
 )

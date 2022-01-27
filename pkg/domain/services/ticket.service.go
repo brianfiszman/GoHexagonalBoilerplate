@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/dtos"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/repositories"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/models/schemas"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/application/dtos"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/domain/schemas"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/config"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/repositories"
 	"github.com/go-resty/resty/v2"
 )
 

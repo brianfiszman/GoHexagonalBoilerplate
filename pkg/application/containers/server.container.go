@@ -1,8 +1,8 @@
 package containers
 
 import (
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/http"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/routers"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/http"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/presentation/routers"
 )
 
 type ServerContainer struct {

@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/controllers"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/application/controllers"
 	"github.com/go-chi/chi"
 )
 

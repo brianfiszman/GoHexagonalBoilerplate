@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/routers"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/presentation/routers"
 	"github.com/sirupsen/logrus"
 )
 
