@@ -4,7 +4,7 @@ import "net/http"
 
 const (
 	STATUS_OK = http.StatusOK
-	HELLO_MSG = "Hello World!"
+	HELLO_MSG = "OK"
 )
 
 type Response struct {

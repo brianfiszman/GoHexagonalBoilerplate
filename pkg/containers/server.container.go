@@ -1,26 +1,21 @@
 package containers
 
 import (
-	"os"
-
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/http"
 	"github.com/brianfiszman/GoFromZeroToHero/pkg/routers"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/server"
 )
 
 type ServerContainer struct {
-	*server.Server
+	Server *http.Server
 }
 
-func CreateServerContainer() (serverContainer ServerContainer) {
-	var httpRouter *routers.HTTP_Router = &routers.HTTP_Router{}
+func NewServerContainer() (serverContainer ServerContainer) {
+	var httpRouter *routers.HTTPRouter = &routers.HTTPRouter{}
 
-	httpRouter.ConnectorRouter = httpRouter.NewConnectorRouter()
+	httpRouter.Handler = httpRouter.NewHTTPRouter()
 
 	serverContainer = ServerContainer{
-		&server.Server{
-			HTTP_Router: httpRouter,
-			HTTP_Port:   os.Getenv("HTTP_PORT"),
-		},
+		Server: http.NewServer(httpRouter),
 	}
 
 	return

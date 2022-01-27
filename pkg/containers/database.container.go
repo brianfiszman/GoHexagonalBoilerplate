@@ -1,21 +1,20 @@
 package containers
 
 import (
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/adapters"
 	"github.com/brianfiszman/GoFromZeroToHero/pkg/config"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/services"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/interfaces"
 )
 
 type DatabaseContainer struct {
 	DatabaseConfig config.DatabaseConfig
-	Database       *services.Database
+	Database       interfaces.Database
 }
 
-func CreateDatabaseContainer() *DatabaseContainer {
+func NewDatabaseContainer() *DatabaseContainer {
 	var d *DatabaseContainer = &DatabaseContainer{
 		DatabaseConfig: config.GetDatabaseConfig(),
-		Database: &services.Database{
-			Config: config.GetDatabaseConfig(),
-		},
+		Database:       adapters.NewPostgreSQLAdapter(),
 	}
 
 	d.Database.ConnectDatabase()
