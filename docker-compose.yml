@@ -2,12 +2,29 @@ version: "3"
 services:
   postgresql:
     image: "postgres" # use latest official postgres version
+    env_file: .env
+    container_name: "postgres"
     ports:
-        - "5433:5433"
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=123123
-      - POSTGRES_DB=testdb
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASS}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - ".dev-data/fred/postgresql:/var/lib/postgresql/data"
+      - ".dev-data/fred/db-server-run/:/run/postgresql/"
+      - ./db-schema:/db-schema
+
+  ms-users:
+    container_name: ms-users
+    depends_on:
+      - postgresql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${HTTP_PORT}:${HTTP_PORT}"
+    env_file: .env
     volumes:
       - ".dev-data/fred/postgresql:/var/lib/postgresql/data"
       - ".dev-data/fred/db-server-run/:/run/postgresql/"
