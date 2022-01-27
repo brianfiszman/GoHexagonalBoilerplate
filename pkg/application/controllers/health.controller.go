@@ -5,11 +5,12 @@ import (
 	"net/http"
 
 	"github.com/brianfiszman/GoFromZeroToHero/pkg/application/dtos"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/domain/interfaces"
+	"github.com/brianfiszman/GoFromZeroToHero/pkg/domain/services"
+	"github.com/sirupsen/logrus"
 )
 
 type HealthController struct {
-	Database interfaces.Database
+	HealthService services.HealthService
 }
 
 func (h HealthController) IsHealthy(rw http.ResponseWriter, r *http.Request) {
@@ -18,7 +19,16 @@ func (h HealthController) IsHealthy(rw http.ResponseWriter, r *http.Request) {
 		Status:  dtos.STATUS_OK,
 	}
 
+	err := h.HealthService.GetHealthiness()
+
+	if err != nil {
+		logrus.Error(err)
+
+		res.Message = err.Error()
+		res.Status = http.StatusInternalServerError
+	}
+
 	rw.Header().Set("Content-Type", "application/json")
-	rw.WriteHeader(http.StatusOK)
+	rw.WriteHeader(res.Status)
 	json.NewEncoder(rw).Encode(res)
 }
