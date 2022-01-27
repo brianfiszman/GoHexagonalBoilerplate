@@ -9,4 +9,5 @@ require (
 	github.com/go-resty/resty/v2 v2.6.0
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/mitchellh/mapstructure v1.4.1
+	github.com/sirupsen/logrus v1.8.1 // indirect
 )
