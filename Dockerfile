@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN ["go", "mod", "tidy"]
+RUN `go mod tidy \
+  && go build cmd/main.go`
 
-CMD ["go","run","cmd/main.go"]
+CMD ["./main"]
