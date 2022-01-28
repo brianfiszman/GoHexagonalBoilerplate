@@ -1,43 +1,48 @@
-# ServiceNow Integration
+# Go Hexagonal Boilerplate
 
 ### Description
-This project provides an API that communicates with ServiceNow 
-API for the creation and listing of tickets and also listing of users.
+This project provides an API with access to a PostgreSQL.
+It has JWT integration in one of the endpoints.
 
 # Available routes:
 
 |method|endpoint|description|headers|
 |:-----|:-----|:-----|:-----|
-|GET|/tickets/users|finds all users|bearer JWT token |
-|GET|/tickets|finds all tickets|bearer JWT token |
-|POST|/tickets|creates new ticket|bearer JWT token |
+|GET|/health|checks healthiness and readiness| |
 |POST|/auth|returns jwt token| |
+
+# Architecture Diagram
+![k8s-diagram](https://user-images.githubusercontent.com/13773140/151622302-921745e7-3eb2-4af1-bb22-e703ce3f815f.png)
+
 
 # Project Structure
 ```sh
-    pkg
-    |_ config
-    |_ containers
-    |_ controllers
-    |_ dtos
-    |_ model
-        |_ repositories
-        |_ schemas
-        |_ services
-    |_ routers
-    |_ server
-    |_ services       
+    |_ cmd
+    |_ pkg
+        |_ application
+            |_ containers
+            |_ controllers
+            |_ dtos
+        |_ domain
+            |_ interfaces
+            |_ schemas
+            |_ services
+        |_ infrastructure
+            |_ adapters
+            |_ config
+            |_ http
+            |_ repositories
+            |_ services       
+        |_ presentation
+            |_ routers
 ```
 ### Getting started
-1. You need to have ***go***, ***Docker*** and ***docker-compose*** installed
-2. Clone the repository by running `git clone https://github.com/brianfiszman/GoFromZeroToHero` into your terminal
+1. You need to have ***go***, ***Docker***, ***docker-compose***, **minikube**, **helm**, **helm secrets** and **skaffold** installed
+2. Clone the repository by running `git clone https://github.com/brianfiszman/GoHexagonalBoilerplate` into your terminal
 3. Create a ***.env*** file with the following content:
 
 |Name|Description|Example|
 |:-----|:-----|:-----|
-|SERVICE_NOW_USER|Your ServiceNow User|foo|
-|SERVICE_NOW_PASS|Your ServiceNow Password|bar|
-|SERVICE_NOW_API_BASE_URL|The ServiceNow API URL you are using|https://foo123123.service-now.com/api|
 |HTTP_PORT|HTTP Port allocated for service|3000|
 |JWT_SECRET|Secret Key injected inside the JWT Token|foobar|
 |DATABASE_HOST|PostgreSQL database host location|localhost|
@@ -47,7 +52,34 @@ API for the creation and listing of tickets and also listing of users.
 |DATABASE_NAME|PostgreSQL database name |anycoloryoulike|
 
 4. Run `docker-compose up` in your terminal
-5. Run `make run-connector` in your terminal
+
+
+### How to deploy on Kubernetes locally
+1. First we need to worry about creating the secrets, which will be used as environment variables encrypted.
+To achieve this we need to have a GPG key created in our system. Once its created obtain it with the following command `gpg --list-secret-keys --keyid-format LONG`
+
+2. Replace the current GPG key in k8s/.sops.yaml file with the one in your clipboard 
+
+3. Modify the k8s/secrets.yaml file with the following environment variables:
+```yaml
+secrets:
+    HTTP_PORT: "8080"
+    DATABASE_HOST: app-postgresql
+    DATABASE_PORT: "5432"
+    DATABASE_USER: postgres
+    DATABASE_PASS: "123123"
+    DATABASE_NAME: testdb
+    postgresql-password: "123123"
+```
+
+4. Run the following command: `make encrypt-secrets`
+
+5. Run `minikube start` to start the Kubernetes service on Docker
+
+6. Run `make skaffold-debug` in your terminal.
+
+7. Enjoy!
+
 
 ### Mentions
 I want to thank for the support in this project to my GlobalLogic Team, @barbaraimperatori and @MaxiSanchez600

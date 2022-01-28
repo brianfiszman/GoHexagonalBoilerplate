@@ -1,5 +1,5 @@
-.PHONY: run-connector
-run-connector: 
+.PHONY: run-debug
+run-debug: 
 	env `cat .env` go run ./cmd/main.go
 
 .PHONY: create-topics
