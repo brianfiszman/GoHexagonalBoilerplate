@@ -49,6 +49,34 @@ It has JWT integration in one of the endpoints.
 
 4. Run `docker-compose up` in your terminal
 
+
+### How to deploy on Kubernetes locally
+1. First we need to worry about creating the secrets, which will be used as environment variables encrypted.
+To achieve this we need to have a GPG key created in our system. Once its created obtain it with the following command `gpg --list-secret-keys --keyid-format LONG`
+
+2. Replace the current GPG key in k8s/.sops.yaml file with the one in your clipboard 
+
+3. Modify the k8s/secrets.yaml file with the following environment variables:
+``````
+secrets:
+    HTTP_PORT: "8080"
+    DATABASE_HOST: app-postgresql
+    DATABASE_PORT: "5432"
+    DATABASE_USER: postgres
+    DATABASE_PASS: "123123"
+    DATABASE_NAME: testdb
+    postgresql-password: "123123"
+``````
+
+4. Run the following command: `make encrypt-secrets`
+
+5. Run `minikube start` to start the Kubernetes service on Docker
+
+6. Run `skaffold-debug` in your terminal.
+
+7. Enjoy!
+
+
 ### Mentions
 I want to thank for the support in this project to my GlobalLogic Team, @barbaraimperatori and @MaxiSanchez600
 You are really awesome! :-D
