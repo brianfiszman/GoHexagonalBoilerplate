@@ -33,10 +33,6 @@ func (d *PostgreSQLAdapter) ConnectDatabase() {
 	logrus.Info("Connected to ", d.ConnectionPool.Config().ConnString())
 }
 
-func (d *PostgreSQLAdapter) GetConnection() *pgxpool.Pool {
-	return d.ConnectionPool
-}
-
 func (d *PostgreSQLAdapter) Ping() error {
 	return d.ConnectionPool.Ping(context.Background())
 }
