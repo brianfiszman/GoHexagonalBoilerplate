@@ -1,8 +1,8 @@
 package containers
 
 import (
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/http"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/presentation/routers"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/infrastructure/http"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/presentation/routers"
 )
 
 type ServerContainer struct {

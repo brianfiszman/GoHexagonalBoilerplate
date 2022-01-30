@@ -1,4 +1,4 @@
-module github.com/brianfiszman/GoFromZeroToHero
+module github.com/brianfiszman/GoHexagonalBoilerplate
 
 go 1.17
 

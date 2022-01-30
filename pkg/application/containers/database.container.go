@@ -1,9 +1,9 @@
 package containers
 
 import (
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/domain/interfaces"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/adapters"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/config"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/domain/interfaces"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/infrastructure/adapters"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/infrastructure/config"
 )
 
 type DatabaseContainer struct {

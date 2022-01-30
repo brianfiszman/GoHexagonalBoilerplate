@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/services"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/infrastructure/services"
 )
 
 func Auth(rw http.ResponseWriter, r *http.Request) {
