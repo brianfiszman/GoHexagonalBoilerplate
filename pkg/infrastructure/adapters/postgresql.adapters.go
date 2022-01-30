@@ -27,7 +27,7 @@ func (d *PostgreSQLAdapter) ConnectDatabase() {
 	d.ConnectionPool = dbpool
 
 	if err != nil {
-		logrus.Fatal("Unable to connect to database: %v\n", err)
+		logrus.Fatal("Unable to connect to database: ", err)
 	}
 
 	logrus.Info("Connected to ", d.ConnectionPool.Config().ConnString())
