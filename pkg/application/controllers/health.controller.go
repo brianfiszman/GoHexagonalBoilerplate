@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/application/dtos"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/domain/services"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/application/dtos"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/domain/services"
 	"github.com/sirupsen/logrus"
 )
 

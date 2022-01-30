@@ -1,6 +1,6 @@
 package services
 
-import "github.com/brianfiszman/GoFromZeroToHero/pkg/domain/interfaces"
+import "github.com/brianfiszman/GoHexagonalBoilerplate/pkg/domain/interfaces"
 
 type HealthService struct {
 	Database interfaces.Database

@@ -1,10 +1,10 @@
 package containers
 
 import (
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/application/controllers"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/domain/interfaces"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/domain/services"
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/presentation/routers"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/application/controllers"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/domain/interfaces"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/domain/services"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/presentation/routers"
 )
 
 type HealthContainer struct {

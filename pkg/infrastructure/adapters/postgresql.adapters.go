@@ -3,7 +3,7 @@ package adapters
 import (
 	"context"
 
-	"github.com/brianfiszman/GoFromZeroToHero/pkg/infrastructure/config"
+	"github.com/brianfiszman/GoHexagonalBoilerplate/pkg/infrastructure/config"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/sirupsen/logrus"
 )
@@ -27,14 +27,10 @@ func (d *PostgreSQLAdapter) ConnectDatabase() {
 	d.ConnectionPool = dbpool
 
 	if err != nil {
-		logrus.Fatal("Unable to connect to database: %v\n", err)
+		logrus.Fatal("Unable to connect to database: ", err)
 	}
 
 	logrus.Info("Connected to ", d.ConnectionPool.Config().ConnString())
-}
-
-func (d *PostgreSQLAdapter) GetConnection() *pgxpool.Pool {
-	return d.ConnectionPool
 }
 
 func (d *PostgreSQLAdapter) Ping() error {
